@@ -22,21 +22,17 @@ function ContactForm() {
     setNumber('');
   }
 
-  // function checkDoubles(el) {
-  //   if (contacts.find(el => el.name === contact.name)) {
-  //     alert(`${contact.name} is already in contacts!`);
-  //     return;
-  //   }
-  // }
-
   function handleSubmit(e) {
     e.preventDefault();
     const contact = {
       name: e.currentTarget.name.value,
       number: e.currentTarget.number.value,
     };
-    dispatch(actions.addContact(contact));
-
+    if (contacts.find(el => el.name === contact.name)) {
+      alert(`${contact.name} is already in contacts!`);
+    } else {
+      dispatch(actions.addContact(contact));
+    }
     reset();
   }
 
