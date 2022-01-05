@@ -23,18 +23,18 @@ function App() {
     );
   }, [contacts, filter]);
 
-  function addContact(contact) {
-    const contactIsInList = contacts.find(
-      el => el.name.toLowerCase() === contact.name.toLowerCase(),
-    );
+  // function addContact(contact) {
+  //   const contactIsInList = contacts.find(
+  //     el => el.name.toLowerCase() === contact.name.toLowerCase(),
+  //   );
 
-    if (contactIsInList) {
-      alert(`${contact.name} is already in contacts!`);
-      return;
-    } else {
-      setContacts(prevState => [contact, ...prevState]);
-    }
-  }
+  //   if (contactIsInList) {
+  //     alert(`${contact.name} is already in contacts!`);
+  //     return;
+  //   } else {
+  //     setContacts(prevState => [contact, ...prevState]);
+  //   }
+  // }
 
   function changeFilter(e) {
     setFilter(e.currentTarget.value);
@@ -48,7 +48,7 @@ function App() {
     <div className="App">
       <div>
         <h1>Phonebook</h1>
-        <ContactForm onSubmit={addContact} />
+        <ContactForm />
 
         <h2>Contacts</h2>
         <Filter value={filter} onChange={changeFilter} />

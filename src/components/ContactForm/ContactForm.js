@@ -1,27 +1,20 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from '../../redux/actions';
+import { getContacts } from '../../redux/selectors';
+
 import PropTypes from 'prop-types';
-import shortid from 'shortid';
 import s from './ContactForm.module.css';
 
-function ContactForm({ onSubmit }) {
+function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
-  const handleChange = e => {
-    const name = e.currentTarget.name;
-    const value = e.currentTarget.value;
-
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'number':
-        setNumber(value);
-        break;
-
-      default:
-        return;
-    }
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    name === 'name' ? setName(value) : setNumber(value);
   };
 
   function reset() {
@@ -29,12 +22,21 @@ function ContactForm({ onSubmit }) {
     setNumber('');
   }
 
+  // function checkDoubles(el) {
+  //   if (contacts.find(el => el.name === contact.name)) {
+  //     alert(`${contact.name} is already in contacts!`);
+  //     return;
+  //   }
+  // }
+
   function handleSubmit(e) {
     e.preventDefault();
-    const name = e.currentTarget.name.value;
-    const number = e.currentTarget.number.value;
-    const id = shortid.generate();
-    onSubmit({ name, number, id });
+    const contact = {
+      name: e.currentTarget.name.value,
+      number: e.currentTarget.number.value,
+    };
+    dispatch(actions.addContact(contact));
+
     reset();
   }
 
